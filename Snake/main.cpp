@@ -10,7 +10,7 @@ bool gameOver{};
 const int width = 20;
 const int height = 20;
 const int maxSnakeSize = width * height - (width + height * 2 - 1);// tail size is width time height - walls and minus 1 for the head
-int playerX{}, playerY{}, mouseX{}, mouseY{}, score{}, tailX[maxSnakeSize], tailY[maxSnakeSize], nTale{};
+int playerX{}, playerY{}, mouseX{}, mouseY{}, score{}, tailX[maxSnakeSize], tailY[maxSnakeSize], nTail{};
 
 
 enum eDirection
@@ -82,7 +82,20 @@ void Visual()
 			}
 			else
 			{
-				cout << " ";
+				bool printtail = false;
+
+				for (int k = 0; k < nTail; k++)
+				{
+					if (tailX[k] == j && tailY[k] == i)
+					{
+						cout << "o";
+						printtail = true;
+					}
+				}
+				if (!printtail)
+				{
+					cout << " ";
+				}
 			}
 
 		}
@@ -101,16 +114,18 @@ void Logic()
 {
 	int previousXtail = tailX[0];
 	int previousYtail = tailY[0];
-	int previousXtail2{}, previousYtail2{};
+	int previousXtail2, previousYtail2;
 	tailX[0] = playerX;
 	tailY[0] = playerY;
 
-	for (int i = 1; i < nTale; i++)
+	for (int i = 1; i < nTail; i++)
 	{
 		previousXtail2 = tailX[i];
-		previousXtail2 = tailY[i];
+		previousYtail2 = tailY[i];
 		tailX[i] = previousXtail;
 		tailY[i] = previousYtail;
+		previousXtail = previousXtail2;
+		previousYtail = previousYtail2;
 
 	}
 
@@ -136,11 +151,11 @@ void Logic()
 		break;
 	}
 	// Wall handeling
-	if (playerX >= width)
+	if (playerX >= width - 1)
 	{
-		playerX = 0;
+		playerX = 1;
 	}
-	else if (playerX < 0)
+	else if (playerX < 1)
 	{
 		playerX = width - 1;
 	}
@@ -159,6 +174,7 @@ void Logic()
 	if (playerX == mouseX && playerY == mouseY)
 	{
 		score++;
+		nTail++;
 		mouseX = rand() % width;
 		mouseY = rand() % height;
 	}
