@@ -67,18 +67,18 @@ void Visual()
 	{
 		for (int j = 0; j < width; j++)
 		{
-			if (j == 0 || j == width - 1)
-			{
-				cout << "|";
-
-			}
 			if (i == playerY && j == playerX)
 			{
 				cout << "O";
 			}else if (i == mouseY && j == mouseX)
 			{
 				cout << "&";
-			}else
+			}else if (j == 0 || j == width - 1)
+			{
+				cout << "|";
+
+			}
+			else
 			{
 				cout << " ";
 			}
@@ -116,6 +116,25 @@ void Logic()
 	default:
 		break;
 	}
+	// Wall handeling
+	if (playerX >= width)
+	{
+		playerX = 0;
+	}
+	else if (playerX < 0)
+	{
+		playerX = width - 1;
+	}
+
+	if (playerY >= height)
+	{
+		playerY = 0;
+	}
+	else if (playerY < 0)
+	{
+		playerY = height - 1;
+	}
+
 
 	// Is mouse eaten check
 	if (playerX == mouseX && playerY == mouseY)
