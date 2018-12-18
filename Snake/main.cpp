@@ -1,11 +1,15 @@
 #include <iostream>
+#include <Windows.h>
+#include <conio.h>
+//#include <stdlib.h>
+
 
 using namespace std;
 
 bool gameOver{};
 const int width = 20;
 const int height = 20;
-int x{}, y{}, mouseX{}, mouseY{}, score{};
+int playerX{}, playerY{}, mouseX{}, mouseY{}, score{};
 
 enum eDirection
 {	STOP,
@@ -34,6 +38,7 @@ int main() {
 		Visual();
 		Input();
 		Logic();
+		Sleep(100);
 	}
 
 	cin.get();
@@ -43,8 +48,8 @@ int main() {
 void Settings() {
 	gameOver = false;
 	direction = STOP;
-	x = width / 2;
-	y = height / 2;
+	playerX = width / 2;
+	playerY = height / 2;
 	mouseX = rand() % width;
 	mouseY = rand() % height;
 	score = 0;
@@ -60,13 +65,27 @@ void Visual()
 	cout << endl;
 	for (int i = 0; i < height; i++)
 	{
-		cout << "|";
-		for (int j = 0; j < width-1; j++)
+		for (int j = 0; j < width; j++)
 		{
-			cout << " ";
+			if (j == 0 || j == width - 1)
+			{
+				cout << "|";
+
+			}
+			if (i == playerY && j == playerX)
+			{
+				cout << "O";
+			}else if (i == mouseY && j == mouseX)
+			{
+				cout << "&";
+			}else
+			{
+				cout << " ";
+			}
 
 		}
-		cout << "|" << endl;
+		cout << endl;
+		
 	}
 	for (int i = 0; i < width; i++)
 	{
@@ -78,8 +97,51 @@ void Visual()
 }
 void Logic()
 {
+	switch (direction)
+	{
+	case STOP:
+		break;
+	case LEFT:
+		playerX--;
+		break;
+	case RIGHT:
+		playerX++;
+		break;
+	case UP:
+		playerY--;
+		break;
+	case DOWN:
+		playerY++;
+		break;
+	default:
+		break;
+	}
 }
 
 void Input()
 {
+	if (_kbhit())
+	{
+		switch (_getch())
+		{
+		case 'w' :
+				direction = UP;
+				break;
+		case 's':
+			direction = DOWN;
+			break;
+		case 'a':
+			direction = LEFT;
+			break;
+		case 'd':
+			direction = RIGHT;
+			break;
+		case 'x':
+			gameOver = true;
+			break;
+		default:
+			break;
+		}
+
+	}
 }
