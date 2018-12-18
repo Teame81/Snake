@@ -52,6 +52,29 @@ void Settings() {
 
 void Visual()
 {
+	system("cls");
+	for (int i = 0; i < width; i++)
+	{
+		cout << "_";
+	}
+	cout << endl;
+	for (int i = 0; i < height; i++)
+	{
+		cout << "|";
+		for (int j = 0; j < width-1; j++)
+		{
+			cout << " ";
+
+		}
+		cout << "|" << endl;
+	}
+	for (int i = 0; i < width; i++)
+	{
+		cout << "-";
+	}
+
+
+
 }
 void Logic()
 {
