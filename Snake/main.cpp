@@ -91,7 +91,7 @@ void Visual()
 	{
 		cout << "-";
 	}
-
+	cout << endl <<"Score: " << score;
 
 
 }
@@ -116,6 +116,15 @@ void Logic()
 	default:
 		break;
 	}
+
+	// Is mouse eaten check
+	if (playerX == mouseX && playerY == mouseY)
+	{
+		score++;
+		mouseX = rand() % width;
+		mouseY = rand() % height;
+	}
+
 }
 
 void Input()
