@@ -9,7 +9,9 @@ using namespace std;
 bool gameOver{};
 const int width = 20;
 const int height = 20;
-int playerX{}, playerY{}, mouseX{}, mouseY{}, score{};
+const int maxSnakeSize = width * height - (width + height * 2 - 1);// tail size is width time height - walls and minus 1 for the head
+int playerX{}, playerY{}, mouseX{}, mouseY{}, score{}, tailX[maxSnakeSize], tailY[maxSnakeSize], nTale{};
+
 
 enum eDirection
 {	STOP,
@@ -97,6 +99,23 @@ void Visual()
 }
 void Logic()
 {
+	int previousXtail = tailX[0];
+	int previousYtail = tailY[0];
+	int previousXtail2{}, previousYtail2{};
+	tailX[0] = playerX;
+	tailY[0] = playerY;
+
+	for (int i = 1; i < nTale; i++)
+	{
+		previousXtail2 = tailX[i];
+		previousXtail2 = tailY[i];
+		tailX[i] = previousXtail;
+		tailY[i] = previousYtail;
+
+	}
+
+
+
 	switch (direction)
 	{
 	case STOP:
@@ -153,8 +172,8 @@ void Input()
 		switch (_getch())
 		{
 		case 'w' :
-				direction = UP;
-				break;
+			direction = UP;
+			break;
 		case 's':
 			direction = DOWN;
 			break;
